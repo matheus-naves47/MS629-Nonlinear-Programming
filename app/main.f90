@@ -10,11 +10,11 @@ program OTISER
 
     ! Declaração de Parâmetros
     ! double precision :: x()
-    double precision, dimension(6) :: x, y, z, w
+    double precision, dimension(1000) :: x, y, z, w
     integer, parameter::n = size(x)
     double precision :: alpha ! Taxa de decréscimo suficiente na Regra de Armijo
     ! double precision :: beta ! Constante de proporcionalidade para a direção
-    ! double precision :: gamma ! Constante relativa ao ângulo entre a direção e o gradiente
+    ! double precision :: gama ! Constante relativa ao ângulo entre a direção e o gradiente
     double precision :: sigma ! Fator de diminuição na busca unidimensional
     ! double precision :: rho ! Incremento inicial na globalização do método de Newton
     double precision :: eps ! precisão para a norma do gradiente (critério de parada).
@@ -34,9 +34,20 @@ program OTISER
     end do
 
     ! Método do Gradiente
-    call metodo_gradiente(quadratica, x, alpha, sigma, eps, maxits)
-    call metodo_gradiente(rosenbrock, y, alpha, sigma, eps, maxits)
-    call metodo_gradiente(styblinsky_tang, z, alpha, sigma, eps, maxits)
-    call metodo_gradiente(rastrigin, w, alpha, sigma, eps, maxits)
+
+    ! call metodo_gradiente(quadratica, quadratica_grad, x, alpha, sigma, eps, maxits)
+    ! print *, ""
+    ! call metodo_gradiente(quadratica, quadratica_grad, y, alpha, sigma, eps, maxits)
+    ! print *, ""
+    ! call metodo_gradiente(quadratica, quadratica_grad, z, alpha, sigma, eps, maxits)
+    ! print *, ""
+    ! call metodo_gradiente(quadratica, quadratica_grad, w, alpha, sigma, eps, maxits)
+    ! print *, ""
+
+
+
+    ! call metodo_gradiente(rosenbrock, rosenbrock_grad, y, alpha, sigma, eps, maxits)
+    ! call metodo_gradiente(styblinsky_tang, styblinsky_tang_grad, z, alpha, sigma, eps, maxits)
+    ! call metodo_gradiente(rastrigin, rastrigin_grad, w, alpha, sigma, eps, maxits)
 
 end program OTISER

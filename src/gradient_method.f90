@@ -6,35 +6,20 @@ module gradient_method
         end function fproc
     end interface
 
+    abstract interface
+        pure function gproc(x) result(result)
+            double precision, dimension(:), intent(in) :: x
+            double precision, dimension(size(x)) :: result
+        end function gproc
+    end interface
+
 contains
-    pure function grad(fun, x) result(result)
 
-        implicit none
-! Declarações
-        procedure(fproc) :: fun ! Função de entrada para cálculo do vetor gradiente
-        double precision, dimension(:), intent(in) :: x ! Vetor de variáveis
-        double precision, dimension(size(x)) :: result ! Vetor gradiente (resultado)
-        double precision, dimension(size(x)) :: e ! Vetor unitário para o cálculo do gradiente
-        double precision :: h ! Incremento h para calcular as derivadas
-        integer :: i ! Contador
-
-        h = epsilon(x(1))**(1.0/3.0) ! Define tamanho de passo h
-        e = 0 ! Inicializa vetor unitário com 0 para cada entrada
-
-        do i = 1, size(x) ! Define vetor unitário
-            e(i) = 1 ! Define 1 na posição atual do vetor e
-            result(i) = (fun(x + h*e) - fun(x - h*e))/(2.*h)
-            ! result(i) = (fun(x + h*e) - fun(x))/(h)
-            e(i) = 0 ! Define 0 na posição atual do vetor e para a próxima iteração.
-
-        end do
-
-    end function grad
-
-    subroutine metodo_gradiente(fun, x0, alpha, sigma, eps, maxits)
+    subroutine metodo_gradiente(fun, grad, x0, alpha, sigma, eps, maxits)
         ! Subrotina para otimizar uma função via método do gradiente
 
         procedure(fproc) :: fun
+        procedure(gproc) :: grad
         double precision, dimension(:), intent(in) :: x0 ! Aproximação inicial x0
         double precision, intent(in) :: alpha ! Taxa de decréscimo suficiente na Regra de Armijo
         double precision, intent(in) :: sigma ! Fator de diminuição na busca unidimensional
@@ -65,8 +50,8 @@ contains
             stop
         end if
 
-        do while (norm2(grad(fun, xk)) .gt. eps) ! Critério de parada (precisão da norma do gradiente)
-            direcao = -grad(fun, xk) ! Toma direção de descida como gradiente conjugado
+        do while (norm2(grad(xk)) .gt. eps) ! Critério de parada (precisão da norma do gradiente)
+            direcao = -grad(xk) ! Toma direção de descida como gradiente conjugado
             tk = 1. ! Iterador para regra de Armijo
 
             ! Verifica se o tamanho do passo respeita a regra de Armijo
@@ -108,7 +93,7 @@ contains
         print 4, "Encontrado após ", k, " iterações."
 4       format(1X, A, I12, A)
 
-print *, ""
+        print *, ""
 
     end subroutine metodo_gradiente
 end module gradient_method

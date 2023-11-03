@@ -4,13 +4,15 @@ license = "None"
 author = "Matheus Alves de Andrade"
 maintainer = "matheus.alves_prs@outlook.com"
 copyright = "Copyright 2023, Matheus Alves de Andrade"
+
 [build]
 auto-executables = true
 auto-tests = true
 auto-examples = true
-module-naming = false
+
 [install]
 library = false
+
 [fortran]
 implicit-typing = false
 implicit-external = false
