@@ -66,34 +66,30 @@ contains
             ! com o critério de parada do epsilon.
             if (maxits .ne. 0) then
                 if (k == maxits) then
-                    goto 10
+                    goto 20
                 end if
             end if
 
         end do
 
-! 10      print 2, "Mínimo local em: ", ("X", i, "=", xk(i), i=1, size(xk))
-! 2       format(1X, A, 1X, (5(1X, A, I0, A, 1X, F7.2)))
-10      print 2, "******** Método do Gradiente ********"
+        ! Impressão da saída
+20      print 2, "******** Método do Gradiente ********"
 
         print *, "Parâmetros: "
         print 2, "alpha = ", alpha
         print 2, "sigma = ", sigma
         print 2, "epsilon = ", eps
-2       format(1X, A, ES10.2E2)
-
         print *, ""
-
         print *, "Mínimo local em:"
+        ! Imprime cada valor de xi em cada linha
         do i = 1, n
-            print 3, "x", i, " = ", xk(i)
-3           format(1X, A, I0, A, F22.16)
-! 2           format(1X, A, I0, A, ES15.3E3)
+            write (*, 3) i, xk(i)
         end do
-        print 4, "Encontrado após ", k, " iterações."
-4       format(1X, A, I12, A)
-
+        write (*, 4) k
         print *, ""
+2       format(1X, A, ES10.2E2) ! Formatação dos parâmetros
+3       format(1X, 'x[', I0, '] = ', F16.12) ! Formatação de cada xi
+4       format(1X, "Encontrado após ", I0, " iterações.") ! Formatação do número de iterações.
 
     end subroutine metodo_gradiente
 end module gradient_method
