@@ -9,6 +9,7 @@ copyright = "Copyright 2023, Matheus Alves de Andrade"
 auto-executables = true
 auto-tests = true
 auto-examples = true
+link = ["blas", "lapack"]
 
 
 [install]

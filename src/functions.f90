@@ -87,9 +87,9 @@ contains
         result = 0 ! Função inicializa no 0
         do i = 1, n ! loop para definir a função
             if (mod(i, 2) .ne. 0) then
-                result(i,i) = -20
+                result(i, i) = -20
             else if (mod(i, 2) .eq. 0) then
-                result(i,i) = 2
+                result(i, i) = 2
             end if
         end do
     end function rosenbrock_hess

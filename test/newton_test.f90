@@ -5,8 +5,7 @@ program newton
     implicit none
 
     ! Declaração de Parâmetros
-    ! double precision :: x()
-    double precision, dimension(23):: x, y, z, w
+    double precision, dimension(24):: x, y, z, w
     integer, parameter::n = size(x)
     double precision :: alpha ! Taxa de decréscimo suficiente na Regra de Armijo
     double precision :: beta ! Constante de proporcionalidade para a direção
@@ -21,20 +20,21 @@ program newton
     gama = 1e-6
     sigma = 0.5
     rho = 1e-3
-    eps = 1e-12
+    eps = 1e-17
     maxits = 479760
 
+    ! Definição do vetor inicial x0
     do i = 1, n
-        w(i) = 0
         x(i) = 1
-        y(i) = i
-        z(i) = i*i
+        y(i) = 0
+        z(i) = i
+        w(i) = i*i
     end do
 
     ! Método de Newton
-    ! call metodo_newton(quadratica, quadratica_grad, quadratica_hess, x, alpha, beta, gama, sigma, rho, eps, maxits)
-    ! call metodo_newton(rosenbrock, rosenbrock_grad, rosenbrock_hess, x, alpha, beta, gama, sigma, rho, eps, maxits)
-    ! call metodo_newton(styblinsky_tang, styblinsky_tang_grad, styblinsky_tang_hess, x, alpha, beta, gama, sigma, rho, eps, maxits)
-    ! call metodo_newton(rastrigin, rastrigin_grad, rastrigin_hess, x, alpha, beta, gama, sigma, rho, eps, maxits)
+    ! call metodo_newton(quadratica, quadratica_grad, quadratica_hess, w, alpha, beta, gama, sigma, rho, eps, maxits)
+    ! call metodo_newton(rosenbrock, rosenbrock_grad, rosenbrock_hess, w, alpha, beta, gama, sigma, rho, eps, maxits)
+    ! call metodo_newton(styblinsky_tang, styblinsky_tang_grad, styblinsky_tang_hess, w, alpha, beta, gama, sigma, rho, eps, maxits)
+    ! call metodo_newton(rastrigin, rastrigin_grad, rastrigin_hess, y, alpha, beta, gama, sigma, rho, eps, maxits)
 
 end program newton

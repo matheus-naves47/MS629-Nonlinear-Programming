@@ -143,22 +143,22 @@ contains
         print 2, "gamma = ", gama
         print 2, "sigma = ", sigma
         print 2, "rho = ", rho
-        print 2, "epsilon = ", eps
-2       format(1X, A, ES10.2E2) ! Formatação dos parâmetros
+        print 2, "eps = ", eps
 
         print *, ""
-
-        print *, "Mínimo local em:"
+        print *, "Solução encontrada em:"
         ! Imprime cada valor de xi em cada linha
         do i = 1, n
             write (*, 3) i, xk(i)
         end do
-        write (*, 4) k
-
         print *, ""
-
-3       format(1X, 'x[', I0, '] = ', E0.16) ! Formatação de cada xi
-4      format(1X, "Encontrado após ", I0, " iterações.") ! Formatação do número de iterações.
+        
+        write (*, 5) "Função avaliada na solução: ", fun(xk)
+        write (*, 4) k
+2       format(1X, A, D0.2) ! Formatação dos parâmetros
+3       format(1X, 'x[', I0, '] = ', D24.17) ! Formatação de cada xi
+4       format(1X, "Encontrado após ", I0, " iterações.") ! Formatação do número de iterações.
+5       format(1X, A, D24.17) ! Formatação do valor da função na solução
 
     end subroutine metodo_newton
 

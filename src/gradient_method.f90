@@ -26,11 +26,11 @@ contains
         double precision, intent(in) :: eps ! Tolerância Epsilon
         integer, intent(in) :: maxits ! Número máximo de iterações
         integer :: i, k, n ! Contadores e tamanho do vetor x0
-        double precision, dimension(size(x0)) :: xk, direcao ! Vetor iterador xk e vetor da direção do método
+        double precision, dimension(size(x0)) :: xk, dk ! Vetor iterador xk e vetor da direção do método
         double precision :: tk
 
-        k = 0
-        xk = x0
+        k = 0 ! Inicializa contador de iterações
+        xk = x0 ! Inicializa xk como x0
         n = size(x0) ! Define n como a dimensão do vetor x0
 
         ! Verificação de parâmetros
@@ -51,14 +51,14 @@ contains
         end if
 
         do while (norm2(grad(xk)) .gt. eps) ! Critério de parada (precisão da norma do gradiente)
-            direcao = -grad(xk) ! Toma direção de descida como gradiente conjugado
+            dk = -grad(xk) ! Toma direção de descida como gradiente conjugado
             tk = 1. ! Iterador para regra de Armijo
 
             ! Verifica se o tamanho do passo respeita a regra de Armijo
-            do while (fun(xk + tk*direcao) .gt. (fun(xk) + alpha*tk*dot_product(direcao, -direcao)))
+            do while (fun(xk + tk*dk) .gt. (fun(xk) + alpha*tk*dot_product(dk, -dk)))
                 tk = sigma*tk ! Tamanho do passo
             end do
-            xk = xk + tk*direcao ! Atualiza o vetor xk
+            xk = xk + tk*dk ! Atualiza o vetor xk
             k = k + 1 ! Atualiza o contador de iterações
 
             ! Se maxits for definido como 0
@@ -78,18 +78,20 @@ contains
         print *, "Parâmetros: "
         print 2, "alpha = ", alpha
         print 2, "sigma = ", sigma
-        print 2, "epsilon = ", eps
+        print 2, "eps = ", eps
         print *, ""
-        print *, "Mínimo local em:"
+        print *, "Solução encontrada em:"
         ! Imprime cada valor de xi em cada linha
         do i = 1, n
             write (*, 3) i, xk(i)
         end do
-        write (*, 4) k
         print *, ""
-2       format(1X, A, ES10.2E2) ! Formatação dos parâmetros
-3       format(1X, 'x[', I0, '] = ', F16.12) ! Formatação de cada xi
-4       format(1X, "Encontrado após ", I0, " iterações.") ! Formatação do número de iterações.
+        write (*, 5) "Função avaliada na solução: ", fun(xk)
+        write (*, 4) k
+2       format(1X, A, D0.2) ! Formatação dos parâmetros
+3       format(1X, 'x[', I0, '] = ', D24.17) ! Formatação de cada xi
+4       format(1X, "Encontrada após ", I0, " iterações.") ! Formatação do número de iterações.
+5       format(1X, A, D24.17) ! Formatação do valor da função na solução
 
     end subroutine metodo_gradiente
 end module gradient_method
